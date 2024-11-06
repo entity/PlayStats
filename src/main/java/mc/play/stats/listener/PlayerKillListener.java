@@ -40,7 +40,6 @@ public class PlayerKillListener implements Listener {
         // Determine whether the killed entity is a player
         if (entity instanceof Player) {
             customEvent = new Event("player:kill")
-                    .setMetadata("victimName", entity.getName())
                     .setMetadata("victimUuid", entity.getUniqueId().toString())
                     .setMetadata("world", world == null ? "UNKNOWN" : world.getName())
                     .setMetadata("causeOfDeath", causeOfDeath);

@@ -7,6 +7,8 @@ import mc.play.stats.listener.*;
 import mc.play.stats.manager.PlayerStatisticHeartbeatManager;
 import mc.play.stats.obj.Event;
 
+import mc.play.stats.placeholder.PlayStatsExpansion;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -75,6 +77,21 @@ public class PlayerStatsPlugin extends JavaPlugin {
 
         // Load the PlayerStatisticHeartbeatManager
         playerStatisticHeartbeatManager = new PlayerStatisticHeartbeatManager(this);
+
+        if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+            new PlayStatsExpansion(this).register();
+        }
+
+        sdk.getLeaderboards("").thenAccept(leaderboards -> {
+           getLogger().info("Showing leaderboards.");
+            leaderboards.getData().forEach(player -> {
+               getLogger().info(player.getUsername() + " - " + player.getTotal());
+            });
+        }).exceptionally(err -> {
+            getLogger().info("Failed to get leaderboards: " + err.getMessage());
+
+            return null;
+        });
     }
 
     @Override
@@ -93,5 +110,9 @@ public class PlayerStatsPlugin extends JavaPlugin {
     public void addEvent(Event event) {
         getLogger().info("Triggered event: " + event.toString());
         events.add(event);
+    }
+
+    public SDK getSdk() {
+        return sdk;
     }
 }

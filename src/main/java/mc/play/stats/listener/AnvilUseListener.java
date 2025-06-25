@@ -4,6 +4,7 @@ import mc.play.stats.PlayerStatsPlugin;
 import mc.play.stats.obj.Event;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -11,6 +12,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
@@ -24,6 +26,7 @@ public class AnvilUseListener implements Listener {
         this.plugin = plugin;
     }
 
+    @SuppressWarnings("removal")
     @EventHandler(priority = EventPriority.MONITOR)
     public void onAnvilUse(InventoryClickEvent event) {
         if (!(event.getWhoClicked() instanceof Player player)) return;
@@ -73,6 +76,8 @@ public class AnvilUseListener implements Listener {
                 .setMetadata("secondItem", secondItemType)
                 .setMetadata("expCost", String.valueOf(expCost))
                 .setMetadata("enchantments", enchantments);
+
+        plugin.getLogger().info(anvilEvent.toString());
 
         plugin.triggerEvent(anvilEvent, player);
     }

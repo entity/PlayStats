@@ -10,6 +10,7 @@ import com.intellectualsites.http.HttpResponse;
 import com.intellectualsites.http.external.GsonMapper;
 import mc.play.stats.adapter.LocalDateTimeTypeAdapter;
 import mc.play.stats.obj.Event;
+import mc.play.stats.obj.Leaderboard;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -27,6 +28,7 @@ public class SDK {
             .create();
     private final HttpClient HTTP_CLIENT;
     private final int API_VERSION = 1;
+//    private final String API_URL = String.format("https://dev.play.mc/api/v%d", API_VERSION);
     private final String API_URL = String.format("http://playmc.test/api/v%d", API_VERSION);
     private final String secretToken;
 
@@ -62,6 +64,29 @@ public class SDK {
 
             JsonObject body = response.getResponseEntity(JsonObject.class);
             return body.get("success").getAsBoolean();
+        });
+    }
+
+    public CompletableFuture<Leaderboard> getLeaderboards(String leaderboard) {
+        return CompletableFuture.supplyAsync(() -> {
+            final HttpResponse response = this.HTTP_CLIENT.get("/leaderboards")
+                    .withHeader("User-Agent", "PlayerStats")
+                    .withHeader("Content-Type", "application/json")
+                    .onStatus(200, req -> {})
+                    .onRemaining(req -> {
+                        if(req.getStatusCode() != 200) {
+                            throw new CompletionException(new IOException("Unexpected status code (" + req.getStatusCode() + ")"));
+                        }
+                    })
+                    .execute();
+
+            if(response == null) {
+                throw new CompletionException(new IOException("Failed to get leaderboards"));
+            }
+
+            JsonObject body = response.getResponseEntity(JsonObject.class);
+            JsonObject stats = body.get("stats").getAsJsonObject();
+            return GSON.fromJson(stats, Leaderboard.class);
         });
     }
 

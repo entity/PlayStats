@@ -3,7 +3,7 @@
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://github.com/playonmc/PlayStats/blob/main/.github/logo-dark.png?raw=true">
       <source media="(prefers-color-scheme: light)" srcset="https://github.com/playonmc/PlayStats/blob/main/.github/logo-light.png?raw=true">
-      <img alt="PlayMC" src="https://github.com/playonmc/PlayStats/blob/main/.github/logo-light.png?raw=true" width="425" height="134" style="max-width: 100%;">
+      <img alt="PlayMC" src="https://github.com/playonmc/PlayStats/blob/main/.github/logo-light.png?raw=true" width="376" height="134" style="max-width: 100%;">
     </picture>
   </a>
 </p>

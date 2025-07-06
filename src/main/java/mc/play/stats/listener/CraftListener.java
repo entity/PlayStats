@@ -1,6 +1,6 @@
 package mc.play.stats.listener;
 
-import mc.play.stats.PlayerStatsPlugin;
+import mc.play.stats.PlayStatsPlugin;
 import mc.play.stats.obj.Event;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,9 +11,9 @@ import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.inventory.ItemStack;
 
 public class CraftListener implements Listener {
-    private final PlayerStatsPlugin plugin;
+    private final PlayStatsPlugin plugin;
 
-    public CraftListener(PlayerStatsPlugin plugin) {
+    public CraftListener(PlayStatsPlugin plugin) {
         this.plugin = plugin;
     }
 

@@ -1,7 +1,7 @@
 package mc.play.stats.listener;
 
 import io.papermc.paper.event.player.AsyncChatEvent;
-import mc.play.stats.PlayerStatsPlugin;
+import mc.play.stats.PlayStatsPlugin;
 import mc.play.stats.obj.Event;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.entity.Player;
@@ -10,10 +10,10 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
 public class ChatListener implements Listener {
-    private final PlayerStatsPlugin plugin;
+    private final PlayStatsPlugin plugin;
     private final PlainTextComponentSerializer plainTextComponentSerializer = PlainTextComponentSerializer.plainText();
 
-    public ChatListener(PlayerStatsPlugin plugin) {
+    public ChatListener(PlayStatsPlugin plugin) {
         this.plugin = plugin;
     }
 

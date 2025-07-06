@@ -1,7 +1,7 @@
 package mc.play.stats.manager;
 
 import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
-import mc.play.stats.PlayerStatsPlugin;
+import mc.play.stats.PlayStatsPlugin;
 import mc.play.stats.obj.Event;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
@@ -16,12 +16,12 @@ import java.util.UUID;
 
 public class PlayerStatisticHeartbeatManager {
     private static final int HEARTBEAT_INTERVAL = 30 * 20; // 30 seconds, assuming 20 ticks per second
-    private final PlayerStatsPlugin plugin;
+    private final PlayStatsPlugin plugin;
     private final List<UUID> players;
     private final LuckPerms luckPerms;
     private ScheduledTask task;
 
-    public PlayerStatisticHeartbeatManager(PlayerStatsPlugin plugin) {
+    public PlayerStatisticHeartbeatManager(PlayStatsPlugin plugin) {
         this.plugin = plugin;
         this.players = new ArrayList<>();
         this.start();

@@ -1,2 +1,2 @@
-rootProject.name = "PlayerStats"
+rootProject.name = "PlayStats"
 

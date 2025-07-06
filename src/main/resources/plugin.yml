@@ -1,6 +1,6 @@
-name: PlayerStats
+name: PlayStats
 api-version: 1.20
 version: 1.0
-main: mc.play.stats.PlayerStatsPlugin
+main: mc.play.stats.PlayStatsPlugin
 website: https://play.mc
 depend: [LuckPerms]

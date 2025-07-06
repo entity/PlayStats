@@ -1,1 +1,3 @@
-secret-key:
+secret-key: ''
+debug: true
+base-url: 'http://playmc.test/api/v1'

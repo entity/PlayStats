@@ -1,6 +1,6 @@
 package mc.play.stats.listener;
 
-import mc.play.stats.PlayerStatsPlugin;
+import mc.play.stats.PlayStatsPlugin;
 import mc.play.stats.obj.Event;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.advancement.Advancement;
@@ -11,10 +11,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerAdvancementDoneEvent;
 
 public class AdvancementListener implements Listener {
-    private final PlayerStatsPlugin plugin;
+    private final PlayStatsPlugin plugin;
     private final PlainTextComponentSerializer plainTextComponentSerializer = PlainTextComponentSerializer.plainText();
 
-    public AdvancementListener(PlayerStatsPlugin plugin) {
+    public AdvancementListener(PlayStatsPlugin plugin) {
         this.plugin = plugin;
     }
 

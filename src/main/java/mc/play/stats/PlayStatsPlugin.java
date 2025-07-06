@@ -15,13 +15,13 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-public class PlayerStatsPlugin extends JavaPlugin {
+public class PlayStatsPlugin extends JavaPlugin {
     private final List<Event> events;
     private SDK sdk;
     private ScheduledTask task;
     private PlayerStatisticHeartbeatManager playerStatisticHeartbeatManager;
 
-    public PlayerStatsPlugin() {
+    public PlayStatsPlugin() {
         this.events = new ArrayList<>();
     }
 
@@ -31,23 +31,25 @@ public class PlayerStatsPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        sdk = new SDK("TO-BE-CHANGED");
+        saveDefaultConfig();
+
+        sdk = new SDK(getConfig().getString("secret-key"), getConfig().getString("base-url", "http://playmc.test/api/v1"));
 
         task = getServer().getAsyncScheduler().runAtFixedRate(this,
                 scheduledTask -> {
                     List<Event> runEvents = Lists.newArrayList(events.subList(0, Math.min(events.size(), 250)));
                     if (runEvents.isEmpty()) return;
 
-                    getLogger().info("Sending events..");
-                    getLogger().info(SDK.getGson().toJson(runEvents));
+                    debug("Sending events..");
+                    debug(SDK.getGson().toJson(runEvents));
 
                     sdk.sendEvents(runEvents)
                             .thenAccept(aVoid -> {
                                 events.removeAll(runEvents);
-                                getLogger().info("Successfully sent events.");
+                                debug("Successfully sent events.");
                             })
                             .exceptionally(throwable -> {
-                                getLogger().info("Failed to send join events: " + throwable.getMessage());
+                                getLogger().warning("Failed to send events: " + throwable.getMessage());
                                 return null;
                             });
                 },
@@ -82,16 +84,16 @@ public class PlayerStatsPlugin extends JavaPlugin {
             new PlayStatsExpansion(this).register();
         }
 
-        sdk.getLeaderboards("").thenAccept(leaderboards -> {
-           getLogger().info("Showing leaderboards.");
-            leaderboards.getData().forEach(player -> {
-               getLogger().info(player.getUsername() + " - " + player.getTotal());
-            });
-        }).exceptionally(err -> {
-            getLogger().info("Failed to get leaderboards: " + err.getMessage());
-
-            return null;
-        });
+//        sdk.getLeaderboards("").thenAccept(leaderboards -> {
+//           getLogger().info("Showing leaderboards.");
+//            leaderboards.getData().forEach(player -> {
+//               getLogger().info(player.getUsername() + " - " + player.getTotal());
+//            });
+//        }).exceptionally(err -> {
+//            getLogger().info("Failed to get leaderboards: " + err.getMessage());
+//
+//            return null;
+//        });
     }
 
     @Override
@@ -110,6 +112,14 @@ public class PlayerStatsPlugin extends JavaPlugin {
     public void addEvent(Event event) {
         getLogger().info("Triggered event: " + event.toString());
         events.add(event);
+    }
+
+    public void debug(String message) {
+        if(! getConfig().getBoolean("debug", false)) {
+            return;
+        }
+
+        getLogger().info(message);
     }
 
     public SDK getSdk() {

@@ -1,6 +1,6 @@
 package mc.play.stats.listener;
 
-import mc.play.stats.PlayerStatsPlugin;
+import mc.play.stats.PlayStatsPlugin;
 import mc.play.stats.obj.Event;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
@@ -11,9 +11,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerFishEvent;
 
 public class FishListener implements Listener {
-    private final PlayerStatsPlugin plugin;
+    private final PlayStatsPlugin plugin;
 
-    public FishListener(PlayerStatsPlugin plugin) {
+    public FishListener(PlayStatsPlugin plugin) {
         this.plugin = plugin;
     }
 

@@ -1,6 +1,6 @@
 package mc.play.stats.listener;
 
-import mc.play.stats.PlayerStatsPlugin;
+import mc.play.stats.PlayStatsPlugin;
 import mc.play.stats.obj.Event;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -9,9 +9,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLevelChangeEvent;
 
 public class LevelUpListener implements Listener {
-    private final PlayerStatsPlugin plugin;
+    private final PlayStatsPlugin plugin;
 
-    public LevelUpListener(PlayerStatsPlugin plugin) {
+    public LevelUpListener(PlayStatsPlugin plugin) {
         this.plugin = plugin;
     }
 

@@ -1,6 +1,6 @@
 package mc.play.stats.listener;
 
-import mc.play.stats.PlayerStatsPlugin;
+import mc.play.stats.PlayStatsPlugin;
 import mc.play.stats.obj.Event;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -10,9 +10,9 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class PlayerDamageListener implements Listener {
-    private final PlayerStatsPlugin plugin;
+    private final PlayStatsPlugin plugin;
 
-    public PlayerDamageListener(PlayerStatsPlugin plugin) {
+    public PlayerDamageListener(PlayStatsPlugin plugin) {
         this.plugin = plugin;
     }
 

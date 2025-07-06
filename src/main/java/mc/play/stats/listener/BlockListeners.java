@@ -1,7 +1,7 @@
 package mc.play.stats.listener;
 
 import com.jeff_media.customblockdata.CustomBlockData;
-import mc.play.stats.PlayerStatsPlugin;
+import mc.play.stats.PlayStatsPlugin;
 import mc.play.stats.obj.BlockAction;
 import mc.play.stats.obj.Event;
 import org.bukkit.Material;
@@ -21,9 +21,9 @@ import java.util.UUID;
 import static mc.play.stats.util.BlockUtil.SKIP_BLOCKS;
 
 public class BlockListeners implements Listener {
-    private final PlayerStatsPlugin plugin;
+    private final PlayStatsPlugin plugin;
 
-    public BlockListeners(PlayerStatsPlugin plugin) {
+    public BlockListeners(PlayStatsPlugin plugin) {
         this.plugin = plugin;
     }
 

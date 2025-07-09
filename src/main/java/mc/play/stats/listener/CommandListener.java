@@ -20,11 +20,13 @@ public class CommandListener implements Listener {
         Player player = event.getPlayer();
         String command = event.getMessage().split(" ")[0].substring(1);
 
-        // TODO: Add exclusions for commands
+        // Add exclusions for messaging
+        if(command.startsWith("msg") || command.startsWith("reply") || command.startsWith("r")) {
+            return;
+        }
 
         Event commandEvent = new Event("player:command")
-                .setMetadata("command", command)
-                .setMetadata("world", player.getWorld().getName());
+                .setMetadata("command", command);
 
         plugin.triggerEvent(commandEvent, player);
     }

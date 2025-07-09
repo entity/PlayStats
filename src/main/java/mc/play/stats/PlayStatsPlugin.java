@@ -110,7 +110,7 @@ public class PlayStatsPlugin extends JavaPlugin {
     }
 
     public void addEvent(Event event) {
-        getLogger().info("Triggered event: " + event.toString());
+        debug("Triggered event: " + event.toString());
         events.add(event);
     }
 

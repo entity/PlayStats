@@ -23,9 +23,12 @@ public class ChatListener implements Listener {
 
         String message = plainTextComponentSerializer.serialize(event.message());
         Event chatEvent = new Event("player:chat")
-                .setMetadata("words", message.split(" ").length)
-                .setMetadata("world", player.getWorld().getName());
+                .setMetadata("words", message.split(" ").length);
+
+        Event chatContentsEvent = new Event("player:chat_contents")
+                .setMetadata("message", message);
 
         plugin.triggerEvent(chatEvent, player);
+        plugin.triggerEvent(chatContentsEvent, player);
     }
 }

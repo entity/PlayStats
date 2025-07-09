@@ -74,8 +74,6 @@ public class AnvilUseListener implements Listener {
                 .setMetadata("expCost", String.valueOf(expCost))
                 .setMetadata("enchantments", enchantments);
 
-        plugin.getLogger().info(anvilEvent.toString());
-
         plugin.triggerEvent(anvilEvent, player);
     }
 }

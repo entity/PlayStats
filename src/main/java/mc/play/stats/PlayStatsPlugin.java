@@ -74,7 +74,8 @@ public class PlayStatsPlugin extends JavaPlugin {
                 new PortalListeners(this),
                 new RespawnListener(this),
                 new ShearListener(this),
-                new CraftListener(this)
+                new CraftListener(this),
+                new FurnaceListener(this)
         ).forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
 
         // Load the PlayerStatisticHeartbeatManager

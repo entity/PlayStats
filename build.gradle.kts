@@ -20,7 +20,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.21.5-R0.1-SNAPSHOT")
     compileOnly("com.google.code.gson:gson:2.11.0")
     compileOnly("me.clip:placeholderapi:2.11.6")
     implementation("com.intellectualsites.http:HTTP4J:1.6-SNAPSHOT")

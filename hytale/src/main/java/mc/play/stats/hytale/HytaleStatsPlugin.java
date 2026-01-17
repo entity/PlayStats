@@ -66,7 +66,7 @@ public class HytaleStatsPlugin extends JavaPlugin {
         new InventoryListener(this).register(getEntityStoreRegistry());
 
         // Events not available in Hytale (no direct equivalents):
-        // - CraftRecipeEvent (API unclear)
+        // - CraftRecipeEvent (API not yet available)
         // - Advancement/Achievement events
         // - Command execution events
         // - Fishing events

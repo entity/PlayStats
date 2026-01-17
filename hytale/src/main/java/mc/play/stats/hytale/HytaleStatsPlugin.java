@@ -40,7 +40,7 @@ public class HytaleStatsPlugin extends JavaPlugin {
     protected void setup() {
         // TODO: Load config - for now using defaults
         String secretKey = ""; // TODO: Load from config
-        String baseUrl = "http://playmc.test/api/v1"; // TODO: Load from config
+        String baseUrl = "http://talesmp.test/api/v1"; // TODO: Load from config
 
         sdk = new SDK(secretKey, baseUrl);
 

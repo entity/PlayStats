@@ -6,8 +6,8 @@ import com.hypixel.hytale.component.ComponentRegistryProxy;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.EntityEventSystem;
+import com.hypixel.hytale.server.core.asset.type.item.config.CraftingRecipe;
 import com.hypixel.hytale.server.core.event.events.ecs.CraftRecipeEvent;
-import com.hypixel.hytale.server.core.event.events.ecs.SwitchActiveSlotEvent;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
@@ -18,23 +18,22 @@ import javax.annotation.Nonnull;
 import java.util.UUID;
 
 /**
- * Listens for inventory-related events.
- * This includes hotbar slot switches.
+ * Listens for crafting events.
  */
-public class InventoryListener {
+public class CraftListener {
     private final HytaleStatsPlugin plugin;
 
-    public InventoryListener(HytaleStatsPlugin plugin) {
+    public CraftListener(HytaleStatsPlugin plugin) {
         this.plugin = plugin;
     }
 
     public void register(@Nonnull ComponentRegistryProxy<EntityStore> registry) {
-        registry.registerSystem(new SwitchActiveSlotSystem());
+        registry.registerSystem(new CraftRecipeSystem());
     }
 
-    private class SwitchActiveSlotSystem extends EntityEventSystem<EntityStore, SwitchActiveSlotEvent> {
-        SwitchActiveSlotSystem() {
-            super(SwitchActiveSlotEvent.class);
+    private class CraftRecipeSystem extends EntityEventSystem<EntityStore, CraftRecipeEvent> {
+        CraftRecipeSystem() {
+            super(CraftRecipeEvent.class);
         }
 
         @Override
@@ -46,7 +45,7 @@ public class InventoryListener {
         public void handle(int index, ArchetypeChunk<EntityStore> chunk,
                            Store<EntityStore> store,
                            CommandBuffer<EntityStore> buffer,
-                           SwitchActiveSlotEvent event) {
+                           CraftRecipeEvent event) {
             if (event.isCancelled()) {
                 return;
             }
@@ -63,11 +62,13 @@ public class InventoryListener {
             World world = entityStore.getWorld();
             String worldName = world.getName();
 
-            // Note: Slot details require further API investigation
-            Event slotSwitchEvent = new Event("inventory:slot_switch")
+            CraftingRecipe craftedRecipe = event.getCraftedRecipe();
+
+            Event craftEvent = new Event("player:craft")
+                    .setMetadata("item", craftedRecipe.getPrimaryOutput().getItemId())
                     .setMetadata("world", worldName);
 
-            plugin.triggerEvent(slotSwitchEvent, playerName, playerUuid);
+            plugin.triggerEvent(craftEvent, playerName, playerUuid);
         }
     }
 }

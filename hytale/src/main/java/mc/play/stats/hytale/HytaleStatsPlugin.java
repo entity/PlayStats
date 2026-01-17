@@ -65,6 +65,7 @@ public class HytaleStatsPlugin extends JavaPlugin {
         new ZoneListener(this).register(getEntityStoreRegistry());
         new InventoryListener(this).register(getEntityStoreRegistry());
         new CraftListener(this).register(getEntityStoreRegistry());
+        new DeathListener(this).register(getEntityStoreRegistry());
 
         // Events not available in Hytale (no direct equivalents):
         // - Advancement/Achievement events
@@ -74,7 +75,6 @@ public class HytaleStatsPlugin extends JavaPlugin {
         // - Enchanting events
         // - Level/XP events
         // - Damage events (player taking damage)
-        // - Death events
         // - Kill events (PvP)
         // - Portal events
         // - Respawn events

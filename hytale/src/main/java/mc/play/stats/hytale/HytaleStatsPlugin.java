@@ -52,16 +52,18 @@ public class HytaleStatsPlugin extends JavaPlugin {
     }
 
     private void registerListeners() {
-        // Register listeners that have corresponding Hytale events
-        new ActivityListeners(this).register();
-        new BlockListeners(this).register();
-        new ChatListener(this).register();
-        new ItemListeners(this).register();
-        new UseBlockListener(this).register();
-        new WorldListener(this).register();
-        new GameModeListener(this).register();
-        new ZoneListener(this).register();
-        new InventoryListener(this).register();
+        // Register EventRegistry listeners (player lifecycle events)
+        new ActivityListeners(this).register(getEventRegistry());
+        new ChatListener(this).register(getEventRegistry());
+        new WorldListener(this).register(getEventRegistry());
+
+        // Register EntityStoreRegistry listeners (ECS events)
+        new BlockListeners(this).register(getEntityStoreRegistry());
+        new ItemListeners(this).register(getEntityStoreRegistry());
+        new UseBlockListener(this).register(getEntityStoreRegistry());
+        new GameModeListener(this).register(getEntityStoreRegistry());
+        new ZoneListener(this).register(getEntityStoreRegistry());
+        new InventoryListener(this).register(getEntityStoreRegistry());
 
         // Events not available in Hytale (no direct equivalents):
         // - CraftRecipeEvent (API unclear)

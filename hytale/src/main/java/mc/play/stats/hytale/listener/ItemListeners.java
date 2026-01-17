@@ -8,6 +8,7 @@ import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.EntityEventSystem;
 import com.hypixel.hytale.server.core.event.events.ecs.DropItemEvent;
 import com.hypixel.hytale.server.core.event.events.ecs.InteractivelyPickupItemEvent;
+import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
@@ -63,8 +64,13 @@ public class ItemListeners {
             World world = entityStore.getWorld();
             String worldName = world.getName();
 
-            // Note: Item details require further API investigation
+            ItemStack itemStack = event.getItemStack();
+            String itemId = itemStack.getItemId();
+            int quantity = itemStack.getQuantity();
+
             Event pickupEvent = new Event("item:pickup")
+                    .setMetadata("itemType", itemId)
+                    .setMetadata("quantity", quantity)
                     .setMetadata("world", worldName);
 
             plugin.triggerEvent(pickupEvent, playerName, playerUuid);
@@ -102,10 +108,15 @@ public class ItemListeners {
             World world = entityStore.getWorld();
             String worldName = world.getName();
 
-            // Note: Item details require further API investigation
             Event dropEvent = new Event("item:drop")
-                    .setMetadata("dropCause", "player")
                     .setMetadata("world", worldName);
+
+            // DropItemEvent.Drop has the actual item stack
+            if (event instanceof DropItemEvent.Drop dropItem) {
+                ItemStack itemStack = dropItem.getItemStack();
+                dropEvent.setMetadata("itemType", itemStack.getItemId());
+                dropEvent.setMetadata("quantity", itemStack.getQuantity());
+            }
 
             plugin.triggerEvent(dropEvent, playerName, playerUuid);
         }

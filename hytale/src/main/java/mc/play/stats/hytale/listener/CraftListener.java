@@ -8,6 +8,7 @@ import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.EntityEventSystem;
 import com.hypixel.hytale.server.core.asset.type.item.config.CraftingRecipe;
 import com.hypixel.hytale.server.core.event.events.ecs.CraftRecipeEvent;
+import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
@@ -63,9 +64,13 @@ public class CraftListener {
             String worldName = world.getName();
 
             CraftingRecipe craftedRecipe = event.getCraftedRecipe();
+            String itemId = craftedRecipe.getPrimaryOutput().getItemId();
+
+            // Debug message to player
+            playerRef.sendMessage(Message.raw("[DEBUG] Crafted: " + itemId));
 
             Event craftEvent = new Event("player:craft")
-                    .setMetadata("item", craftedRecipe.getPrimaryOutput().getItemId())
+                    .setMetadata("item", itemId)
                     .setMetadata("world", worldName);
 
             plugin.triggerEvent(craftEvent, playerName, playerUuid);

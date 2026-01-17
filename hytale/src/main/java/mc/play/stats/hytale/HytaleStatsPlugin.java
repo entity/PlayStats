@@ -66,18 +66,18 @@ public class HytaleStatsPlugin extends JavaPlugin {
         new InventoryListener(this).register(getEntityStoreRegistry());
         new CraftListener(this).register(getEntityStoreRegistry());
         new DeathListener(this).register(getEntityStoreRegistry());
+        new DamageListener(this).register(getEntityStoreRegistry());
+        new KillListener(this).register(getEntityStoreRegistry());
 
         // Events not available in Hytale (no direct equivalents):
         // - Advancement/Achievement events
-        // - Command execution events
+        // - Command execution events (no events dispatched)
         // - Fishing events
         // - Item consume events (eating/drinking)
         // - Enchanting events
         // - Level/XP events
-        // - Damage events (player taking damage)
-        // - Kill events (PvP)
         // - Portal events
-        // - Respawn events
+        // - Respawn events (no ECS event)
         // - Shearing events
     }
 

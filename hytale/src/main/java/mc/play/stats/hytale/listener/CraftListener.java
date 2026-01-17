@@ -31,9 +31,9 @@ public class CraftListener {
         registry.registerSystem(new CraftRecipeSystem());
     }
 
-    private class CraftRecipeSystem extends EntityEventSystem<EntityStore, CraftRecipeEvent> {
+    private class CraftRecipeSystem extends EntityEventSystem<EntityStore, CraftRecipeEvent.Post> {
         CraftRecipeSystem() {
-            super(CraftRecipeEvent.class);
+            super(CraftRecipeEvent.Post.class);
         }
 
         @Override
@@ -45,7 +45,7 @@ public class CraftListener {
         public void handle(int index, ArchetypeChunk<EntityStore> chunk,
                            Store<EntityStore> store,
                            CommandBuffer<EntityStore> buffer,
-                           CraftRecipeEvent event) {
+                           CraftRecipeEvent.Post event) {
             if (event.isCancelled()) {
                 return;
             }

@@ -1,0 +1,7 @@
+# Copy this file to gradle.properties and customize the paths for your environment
+
+# Path to the Hytale server JAR for compileOnly dependency
+hytaleServerJar=/path/to/HytaleServer/HytaleServer.jar
+
+# Path to Minecraft server plugins directory (for automatic deployment)
+minecraftPluginsDir=/path/to/Minecraft/plugins

@@ -1,0 +1,15 @@
+{
+  "Group": "mc.play.stats",
+  "Name": "PlayStats",
+  "Version": "1.0.0",
+  "Description": "Statistics tracking plugin for Hytale servers",
+  "Authors": [
+    {
+      "Name": "PlayStats Team"
+    }
+  ],
+  "Website": "https://playmc.test",
+  "Main": "mc.play.stats.hytale.HytaleStatsPlugin",
+  "ServerVersion": "*",
+  "IncludesAssetPack": false
+}

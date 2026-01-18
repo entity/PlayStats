@@ -4,9 +4,11 @@ import com.hypixel.hytale.server.core.HytaleServer;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import com.hypixel.hytale.server.core.universe.Universe;
+import com.hypixel.hytale.server.core.util.Config;
 import mc.play.stats.hytale.listener.*;
 import mc.play.stats.hytale.manager.PlayerStatisticHeartbeatManager;
 import mc.play.stats.http.SDK;
+import mc.play.stats.hytale.util.ApiConfig;
 import mc.play.stats.obj.Event;
 
 import javax.annotation.Nonnull;
@@ -26,10 +28,12 @@ public class HytaleStatsPlugin extends JavaPlugin {
     private SDK sdk;
     private ScheduledExecutorService scheduler;
     private PlayerStatisticHeartbeatManager playerStatisticHeartbeatManager;
+    private Config<ApiConfig> config;
 
     public HytaleStatsPlugin(@Nonnull JavaPluginInit init) {
         super(init);
         this.events = new ArrayList<>();
+        registerConfig();
     }
 
     public PlayerStatisticHeartbeatManager getPlayerStatisticHeartbeatManager() {
@@ -38,17 +42,20 @@ public class HytaleStatsPlugin extends JavaPlugin {
 
     @Override
     protected void setup() {
-        // TODO: Load config - for now using defaults
-        String secretKey = "PLAYMC123"; // TODO: Load from config
-        String baseUrl = "http://talesmp.test/api/v1"; // TODO: Load from config
-
-        sdk = new SDK(secretKey, baseUrl);
+        sdk = new SDK(config.get().getSecretKey(), config.get().getBaseUrl());
 
         // Register all event listeners
         registerListeners();
 
         // Initialize the heartbeat manager
         playerStatisticHeartbeatManager = new PlayerStatisticHeartbeatManager(this);
+    }
+
+    private void registerConfig() {
+        this.config = this.withConfig(ApiConfig.CODEC);
+
+        this.config.load();
+        this.config.save();
     }
 
     private void registerListeners() {

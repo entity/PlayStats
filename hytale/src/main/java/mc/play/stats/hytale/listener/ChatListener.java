@@ -31,15 +31,12 @@ public class ChatListener {
 
     private void handleChat(PlayerChatEvent event) {
         PlayerRef playerRef = event.getSender();
-        if (playerRef == null) {
-            return;
-        }
 
         UUID playerUuid = playerRef.getUuid();
         String playerName = playerRef.getUsername();
 
-        // Note: Message content requires further API investigation
-        Event chatEvent = new Event("player:chat");
+        Event chatEvent = new Event("player:chat")
+                .setMetadata("words", event.getContent().split(" ").length);
 
         plugin.triggerEvent(chatEvent, playerName, playerUuid);
     }

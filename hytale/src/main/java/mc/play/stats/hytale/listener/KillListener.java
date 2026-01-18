@@ -102,7 +102,8 @@ public class KillListener {
                 }
             }
 
-            Event killEvent = new Event("player:kill")
+            String eventType = "npc".equals(victimType) ? "mob:kill" : "player:kill";
+            Event killEvent = new Event(eventType)
                     .setMetadata("cause", cause)
                     .setMetadata("world", worldName);
 

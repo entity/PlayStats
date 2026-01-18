@@ -142,8 +142,9 @@ public class HytaleStatsPlugin extends JavaPlugin {
     }
 
     public void debug(String message) {
-        // TODO: Check config for debug setting
-        getLogger().at(Level.INFO).log("[DEBUG] " + message);
+        if (config.get().isDebug()) {
+            getLogger().at(Level.INFO).log("[DEBUG] " + message);
+        }
     }
 
     public SDK getSdk() {

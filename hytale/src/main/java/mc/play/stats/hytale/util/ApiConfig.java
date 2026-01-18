@@ -18,10 +18,16 @@ public class ApiConfig {
                             (config, _) -> config.baseUrl)
                     .add()
 
+                    .append(new KeyedCodec<Boolean>("Debug", Codec.BOOLEAN),
+                            (config, value, _) -> config.debug = value,
+                            (config, _) -> config.debug)
+                    .add()
+
                     .build();
 
     private String secretKey = "";
     private String baseUrl = "";
+    private boolean debug = false;
 
     public ApiConfig() {
     }
@@ -32,5 +38,9 @@ public class ApiConfig {
 
     public String getBaseUrl() {
         return baseUrl;
+    }
+
+    public boolean isDebug() {
+        return debug;
     }
 }

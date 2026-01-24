@@ -7,35 +7,105 @@
     </picture>
   </a>
 </p>
-    
+
 # PlayStats
 
-**PlayStats** is a powerful Minecraft analytics plugin for Spigot/Paper servers. Track every in-game action—from block breaks and placements to mob kills, player kills, crafting events, anvil uses, and more—and display real-time leaderboards via a web API.
+PlayStats is an analytics plugin for Minecraft and Hytale servers. It tracks in-game events and sends them to an API, which can be used for building player profiles and leaderboards.
 
-Built by [PlayMC](https://play.mc) initially as an internal analytics tool, PlayStats is now open-source for full transparency and community contributions.
+**[Example player profile](https://talesmp.com/player/npc)**
 
-## Features
+Built by [PlayMC](https://play.mc) as an internal tool, now open-source.
 
-- **Comprehensive Event Tracking**
-    - Block break & place
-    - Mob kills & player kills
-    - Item crafting, smelting & anvil use
-    - Chest opens, furnace uses, and custom events
-- **Web API & Leaderboards**
-    - Expose stats through a RESTful API
-    - Customizable web-page leaderboards
-    - Caching & pagination support
-- **Highly Configurable**
-    - Enable/disable specific event types
-    - Per-world and per-permission group filters
-    - Data retention policies
-- **Performance-Focused**
-    - Asynchronous logging & batch writes
-    - Built-in in-memory buffer for small servers
+## Platforms
+
+| Platform | Version | Status |
+|----------|---------|--------|
+| Minecraft (Spigot/Paper) | 1.20+ | Primary |
+| Hytale | Early Access | Secondary |
+
+## What it tracks
+
+**Player activity**
+- Joins, quits, chat messages, commands
+- Periodic heartbeat with health, XP, food level, and rank
+
+**Blocks**
+- Placements and breaks with block type and tool used
+
+**Combat**
+- Player kills, mob kills, deaths
+- Damage dealt with weapon tracking
+
+**Items**
+- Crafting, smelting, anvil usage
+- Pickups and drops
+- Enchanting
+
+**Movement**
+- Walk, sprint, swim, climb, fly distances
+- Vehicle travel (boat, minecart, horse, etc.)
+
+**Exploration**
+- Advancements, portal usage, level changes
+
+## How it works
+
+Events are collected in memory and sent to your API in batches every 10 seconds (up to 250 events per batch). Everything runs async so there's no impact on server performance.
+
+Your API receives events like:
+
+```json
+{
+  "identifier": "block:break",
+  "playerName": "npc",
+  "playerUuid": "...",
+  "metadata": {
+    "blockType": "DIAMOND_ORE",
+    "tool": "DIAMOND_PICKAXE",
+    "world": "world"
+  }
+}
+```
 
 ## Installation
 
-1. **Download** the latest `PlayStats.jar` from the [Releases][release] page.
-2. **Drop** the JAR into your server’s `plugins/` directory.
-3. **Restart** or **reload** the server to generate default config.
-4. **Configure** `plugins/PlayStats/config.yml` to your needs.
+**Minecraft**
+1. Download `PlayStats-x.x.x.jar` from [Releases][release]
+2. Drop it in your `plugins/` folder
+3. Restart the server
+4. Edit `plugins/PlayStats/config.yml`
+
+**Hytale**
+1. Download `PlayStats-Hytale-x.x.x.jar` from [Releases][release]
+2. Drop it in your `mods/` folder
+3. Restart the server
+
+Releases are built automatically when a version tag is pushed (e.g., `v1.0.0`).
+
+## Configuration
+
+```yaml
+secret-key: 'your-api-key'
+base-url: 'https://your-api.com/api/v1'
+debug: false
+```
+
+## Integrations
+
+- **LuckPerms** for rank tracking
+- **PlaceholderAPI** for leaderboard placeholders
+
+## Project structure
+
+```
+PlayStats/
+├── common/      # Shared HTTP client and data models
+├── minecraft/   # Paper plugin
+└── hytale/      # Hytale plugin
+```
+
+## License
+
+Open source. See [LICENSE](LICENSE).
+
+[release]: https://github.com/playonmc/PlayStats/releases

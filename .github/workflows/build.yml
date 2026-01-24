@@ -1,0 +1,92 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-minecraft:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Build Minecraft plugin
+        run: ./gradlew :minecraft:shadowJar
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: PlayStats-Minecraft
+          path: minecraft/build/libs/PlayStats-*.jar
+
+  build-hytale:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Java 25
+        uses: actions/setup-java@v4
+        with:
+          java-version: '25-ea'
+          distribution: 'temurin'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Build Hytale plugin
+        run: ./gradlew :hytale:shadowJar
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: PlayStats-Hytale
+          path: hytale/build/libs/PlayStats-Hytale-*.jar
+
+  release:
+    needs: [build-minecraft, build-hytale]
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download Minecraft artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: PlayStats-Minecraft
+          path: artifacts
+
+      - name: Download Hytale artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: PlayStats-Hytale
+          path: artifacts
+
+      - name: Get version from tag
+        id: version
+        run: echo "version=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Rename JARs
+        run: |
+          mv artifacts/PlayStats-*.jar artifacts/PlayStats-${{ steps.version.outputs.version }}.jar 2>/dev/null || true
+          mv artifacts/PlayStats-Hytale-*.jar artifacts/PlayStats-Hytale-${{ steps.version.outputs.version }}.jar 2>/dev/null || true
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: artifacts/*.jar
+          generate_release_notes: true

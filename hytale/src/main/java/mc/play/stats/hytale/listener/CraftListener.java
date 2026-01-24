@@ -67,7 +67,7 @@ public class CraftListener {
             String itemId = craftedRecipe.getPrimaryOutput().getItemId();
 
             // Debug message to player
-            playerRef.sendMessage(Message.raw("[DEBUG] Crafted: " + itemId));
+//            playerRef.sendMessage(Message.raw("[DEBUG] Crafted: " + itemId));
 
             Event craftEvent = new Event("player:craft")
                     .setMetadata("item", itemId)

@@ -3,9 +3,12 @@ package mc.play.stats.hytale.listener;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.event.EventRegistry;
+import com.hypixel.hytale.protocol.HostAddress;
+import com.hypixel.hytale.server.core.auth.PlayerAuthentication;
 import com.hypixel.hytale.server.core.event.events.player.PlayerConnectEvent;
 import com.hypixel.hytale.server.core.event.events.player.PlayerDisconnectEvent;
 import com.hypixel.hytale.server.core.event.events.player.PlayerReadyEvent;
+import com.hypixel.hytale.server.core.io.PacketHandler;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import mc.play.stats.hytale.HytaleStatsPlugin;
@@ -65,6 +68,19 @@ public class ActivityListeners {
         // Trigger join event
         Event joinEvent = new Event("player:join")
                 .setMetadata("lastJoined", System.currentTimeMillis());
+
+        PacketHandler packetHandler = playerRef.getPacketHandler();
+        PlayerAuthentication auth = packetHandler.getAuth();
+
+        if(auth != null) {
+            HostAddress referralSource = auth.getReferralSource();
+            if(referralSource != null) {
+                String domain = referralSource.host;
+                int port = referralSource.port;
+
+                joinEvent.setMetadata("domain", domain + ":" + port);
+            }
+        }
 
         plugin.triggerEvent(joinEvent, playerName, playerUuid);
     }

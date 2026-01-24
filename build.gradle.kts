@@ -1,6 +1,6 @@
 plugins {
     java
-    id("io.github.goooler.shadow") version "8.1.8"
+    id("com.gradleup.shadow") version "9.3.1"
 }
 
 group = "mc.play"
@@ -8,7 +8,7 @@ version = "1.0-SNAPSHOT"
 
 subprojects {
     apply(plugin = "java-library")
-    apply(plugin = "io.github.goooler.shadow")
+    apply(plugin = "com.gradleup.shadow")
 
     group = rootProject.group
     version = rootProject.version

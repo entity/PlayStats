@@ -40,3 +40,4 @@ bin/
 
 ### Misc ###
 server
+gradle.properties

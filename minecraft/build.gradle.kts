@@ -1,6 +1,6 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
-val minecraftPluginsDir: String? by project
+val minecraftServerDir: String? by project
 
 dependencies {
     api(project(":common"))
@@ -26,8 +26,8 @@ tasks.processResources {
     }
 }
 
-if (minecraftPluginsDir != null) {
-    val pluginsDir = file(minecraftPluginsDir!!)
+if (minecraftServerDir != null) {
+    val pluginsDir = file(minecraftServerDir!!).resolve("plugins")
 
     tasks.register<Copy>("copyToServer") {
         group = "build"
